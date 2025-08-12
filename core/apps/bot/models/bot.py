@@ -15,6 +15,8 @@ class BotUser(AbstractBaseModel):
         unique=True,
     )
     is_register = models.BooleanField(_("is register"), default=False)
+    phone = models.CharField(_("phone"), max_length=255, null=True, blank=True)
+    full_name = models.CharField(_("full name"), max_length=255, null=True, blank=True)
     lang = models.CharField(
         _("lang"),
         max_length=255,

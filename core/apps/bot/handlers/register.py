@@ -1,19 +1,33 @@
 from telebot.types import Message
 
+from core.apps.bot import buttons
 from core.apps.bot.bot import bot
-from core.apps.bot.states.register import RegisterState
+from core.apps.bot.services import get_message, get_user, set_data
+from core.apps.bot.states import RegisterState
 
 
-@bot.message_handler(state=RegisterState.full_name, content_types=["text"])
-def full_name(msg: Message):
-    bot.send_message(msg.chat.id, "Ismingiz qabul qilindi")
-    bot.set_state(msg.from_user.id, RegisterState.phone)
+@bot.message_handler(state=RegisterState.full_name)
+def first_name_handler(msg: Message):
     with bot.retrieve_data(msg.chat.id) as data:
         data["full_name"] = msg.text
+    bot.set_state(msg.from_user.id, RegisterState.phone, msg.chat.id)
+    bot.send_message(msg.chat.id, get_message("enter_phone"), reply_markup=buttons.phone())
 
 
-@bot.message_handler(state=RegisterState.phone)
-def phone(msg: Message):
-    bot.send_message(msg.chat.id, "Telefon no'mer qabul qilindi")
+@bot.message_handler(state=RegisterState.phone, content_types=["contact"])
+def phone_handler(msg: Message):
+    phone = msg.contact.phone_number
     with bot.retrieve_data(msg.chat.id) as data:
-        bot.send_message(msg.chat.id, f"{data['full_name']} -> {msg.text}")
+        full_name = data["full_name"]
+        user = get_user(msg.chat.id)
+        user.full_name = full_name
+        user.phone = phone
+        user.is_register = True
+        user.save()
+    set_data(msg.chat.id, "page", "home")
+    bot.delete_state(msg.chat.id)
+    bot.send_message(
+        msg.chat.id,
+        get_message("home"),
+        reply_markup=buttons.home(),
+    )
