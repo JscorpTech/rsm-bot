@@ -6,74 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bot', '0002_messages_delete_userdata'),
+        ("bot", "0002_messages_delete_userdata"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='botuser',
-            name='is_register',
-            field=models.BooleanField(default=False, verbose_name='is register'),
+            model_name="botuser",
+            name="is_register",
+            field=models.BooleanField(default=False, verbose_name="is register"),
         ),
         migrations.AddField(
-            model_name='messages',
-            name='value_en',
-            field=models.TextField(null=True, verbose_name='value'),
+            model_name="messages",
+            name="value_en",
+            field=models.TextField(null=True, verbose_name="value"),
         ),
         migrations.AddField(
-            model_name='messages',
-            name='value_ru',
-            field=models.TextField(null=True, verbose_name='value'),
+            model_name="messages",
+            name="value_ru",
+            field=models.TextField(null=True, verbose_name="value"),
         ),
         migrations.AddField(
-            model_name='messages',
-            name='value_uz',
-            field=models.TextField(null=True, verbose_name='value'),
+            model_name="messages",
+            name="value_uz",
+            field=models.TextField(null=True, verbose_name="value"),
         ),
         migrations.AlterField(
-            model_name='botuser',
-            name='chat_id',
-            field=models.CharField(max_length=255, unique=True, verbose_name='chat id'),
-        ),
-        migrations.CreateModel(
-            name='Category',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('key', models.CharField(max_length=255, unique=True, verbose_name='key')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('name_uz', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('name_ru', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('name_en', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('desc', models.TextField(verbose_name='desc')),
-                ('desc_uz', models.TextField(null=True, verbose_name='desc')),
-                ('desc_ru', models.TextField(null=True, verbose_name='desc')),
-                ('desc_en', models.TextField(null=True, verbose_name='desc')),
-                ('child', models.ManyToManyField(related_name='parent', to='bot.category', verbose_name='chield')),
-            ],
-            options={
-                'verbose_name': 'categories',
-                'verbose_name_plural': 'services',
-                'db_table': 'categories',
-            },
-        ),
-        migrations.CreateModel(
-            name='Services',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('name_uz', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('name_ru', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('name_en', models.CharField(max_length=255, null=True, verbose_name='name')),
-                ('categories', models.ManyToManyField(to='bot.category', verbose_name='category')),
-            ],
-            options={
-                'verbose_name': 'services',
-                'verbose_name_plural': 'services',
-                'db_table': 'services',
-            },
+            model_name="botuser",
+            name="chat_id",
+            field=models.CharField(max_length=255, unique=True, verbose_name="chat id"),
         ),
     ]

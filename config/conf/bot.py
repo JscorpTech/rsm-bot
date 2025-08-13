@@ -12,3 +12,11 @@ HOTEL_TARIFF = [
     "premium",
     "lux",
 ]
+
+MINI_TOUR = [
+    "jeddax",
+    "toif",
+    "yanbu",
+    "abha",
+    "al_ula",
+]

@@ -1,2 +1,2 @@
+from .admin import *
 from .bot import *
-from .services import *

@@ -1,6 +1,7 @@
 from telebot import custom_filters
 
-from core.apps.bot.services import get_data, get_message
+from core.apps.bot.services import get_data
+from core.apps.bot.services import get_message as _
 
 
 class MessageFilter(custom_filters.AdvancedCustomFilter):
@@ -9,10 +10,10 @@ class MessageFilter(custom_filters.AdvancedCustomFilter):
     def check(self, message, data):
         if type(data) in [list, tuple]:
             for msg in data:
-                if message.text == get_message(msg):
+                if message.text == _(msg):
                     return True
             return False
-        return message.text == get_message(data)
+        return message.text == _(data)
 
 
 class PageFilter(custom_filters.AdvancedCustomFilter):

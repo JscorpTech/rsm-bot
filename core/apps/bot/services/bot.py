@@ -4,13 +4,25 @@ from django.core.cache import cache
 from django.utils import translation
 from telebot.types import KeyboardButton, ReplyKeyboardMarkup
 
-from core.apps.bot.models import BotUser, Messages
+from core.apps.bot.models import AddressModel, BotUser, CategoryModel, Messages
 
 
-def list_to_rely_button(data):
+def get_category_list(service):
+    return CategoryModel.objects.filter(service=service).values_list("name", flat=True)
+
+
+def get_address_list(service):
+    return AddressModel.objects.filter(service=service).values_list("name", flat=True)
+
+
+def make_rely_button(data, translate=True):
     button = ReplyKeyboardMarkup(resize_keyboard=True)
     for item in data:
-        button.add(KeyboardButton(get_message(item)))
+        if translate:
+            text = _(item)
+        else:
+            text = item
+        button.add(KeyboardButton(text))
     return button
 
 

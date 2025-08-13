@@ -2,7 +2,8 @@ from telebot.types import Message
 
 from core.apps.bot import buttons
 from core.apps.bot.bot import bot
-from core.apps.bot.services import get_message, get_user, set_data
+from core.apps.bot.services import get_message as _
+from core.apps.bot.services import get_user, set_data
 from core.apps.bot.states import RegisterState
 
 
@@ -11,7 +12,7 @@ def first_name_handler(msg: Message):
     with bot.retrieve_data(msg.chat.id) as data:
         data["full_name"] = msg.text
     bot.set_state(msg.from_user.id, RegisterState.phone, msg.chat.id)
-    bot.send_message(msg.chat.id, get_message("enter_phone"), reply_markup=buttons.phone())
+    bot.send_message(msg.chat.id, _("enter_phone"), reply_markup=buttons.phone())
 
 
 @bot.message_handler(state=RegisterState.phone, content_types=["contact"])
@@ -28,6 +29,6 @@ def phone_handler(msg: Message):
     bot.delete_state(msg.chat.id)
     bot.send_message(
         msg.chat.id,
-        get_message("home"),
+        _("home"),
         reply_markup=buttons.home(),
     )

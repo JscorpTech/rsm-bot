@@ -1,2 +1,2 @@
 from .bot import *  # noqa
-from .services import *  # noqa
+from .translation import *  # noqa
