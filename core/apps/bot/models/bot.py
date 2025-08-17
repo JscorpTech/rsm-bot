@@ -24,10 +24,16 @@ class BotUser(AbstractBaseModel):
         default="uz",
     )
 
+    def __str__(self) -> str:
+        return "%s - %s" % (self.full_name, self.phone)
+
 
 class Messages(AbstractBaseModel):
     key = models.CharField(_("key"), max_length=255)
     value = models.TextField(_("value"))
+
+    def __str__(self):
+        return "%s - %s" % (self.key, self.value)
 
     class Meta:
         db_table = "messages"

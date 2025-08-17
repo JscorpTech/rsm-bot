@@ -20,3 +20,14 @@ MINI_TOUR = [
     "abha",
     "al_ula",
 ]
+
+
+TRANSFER_SERVICE_TYPES = [
+    "air_to_hotel",
+    "hotel_to_air",
+    "city_transfer",
+]
+VISA_SERVICE_TYPES = [
+    "umra",
+    "turistik",
+]

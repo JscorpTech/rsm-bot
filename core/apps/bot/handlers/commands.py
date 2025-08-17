@@ -10,6 +10,8 @@ from core.apps.bot.services import get_or_create_user, set_data
 def start(msg: Message):
     user, created = get_or_create_user(msg.chat.id)
     if not created and user.is_register:
+        bot.delete_state(msg.chat.id)
+        set_data(msg.chat.id, "page", "home")
         bot.send_message(
             msg.chat.id,
             _("home"),
@@ -22,13 +24,14 @@ def start(msg: Message):
     bot.send_message(
         msg.chat.id,
         _("select_lang"),
-        reply_markup=buttons.lang(),
+        reply_markup=buttons.lang(False),
     )
 
 
 @bot.message_handler(message="home")
 def home(msg: Message):
     set_data(msg.chat.id, "page", "home")
+    bot.delete_state(msg.chat.id)
     bot.send_message(
         msg.chat.id,
         _("home"),

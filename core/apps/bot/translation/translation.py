@@ -10,7 +10,7 @@ class HotelTranslation(TranslationOptions):
 
 @register(CategoryModel)
 class categoryTranslation(TranslationOptions):
-    fields = ["name"]
+    fields = ["name", "desc"]
 
 
 @register(AddressModel)
