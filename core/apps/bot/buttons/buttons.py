@@ -9,7 +9,7 @@ from core.apps.bot.services import make_rely_button
 def home():
     button = ReplyKeyboardMarkup(resize_keyboard=True)
     button.add(KeyboardButton(_("hotel")), KeyboardButton(_("transfer")))
-    button.add(KeyboardButton(_("visa")), KeyboardButton(_("mini_tour")))
+    button.add(KeyboardButton(_("visa")))
     button.add(KeyboardButton(_("contact")), KeyboardButton(_("change_lang")))
     return button
 
