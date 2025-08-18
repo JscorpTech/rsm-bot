@@ -22,7 +22,7 @@ def HotelOrderSignal(sender, instance, created, **kwargs):
         "status": instance.status,
         "category": instance.category.name,
         "location": instance.location.name,
-        "link": reverse("admin:bot_hotelorder_change", args=[instance.id]),
+        "link": env.str("DOMAIN") + reverse("admin:bot_hotelorder_change", args=[instance.id]),
     }
     bot.send_message(env.str("CHANNEL"), message)
 
@@ -36,7 +36,7 @@ def TransferOrderSignal(sender, instance, created, **kwargs):
         "date": instance.date,
         "goods": instance.goods,
         "status": instance.status,
-        "link": reverse("admin:bot_transferorder_change", args=[instance.id]),
+        "link": env.str("DOMAIN") + reverse("admin:bot_transferorder_change", args=[instance.id]),
     }
     bot.send_message(env.str("CHANNEL"), message)
 
@@ -50,6 +50,6 @@ def VisaOrderSignal(sender, instance, created, **kwargs):
         "birth_date": instance.birth_date,
         "service": instance.service,
         "status": instance.status,
-        "link": reverse("admin:bot_visaorder_change", args=[instance.id]),
+        "link": env.str("DOMAIN") + reverse("admin:bot_visaorder_change", args=[instance.id]),
     }
     bot.send_message(env.str("CHANNEL"), message)
