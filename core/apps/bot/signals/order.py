@@ -36,7 +36,7 @@ def HotelOrderSignal(sender, instance, created, **kwargs):
 def TransferOrderSignal(sender, instance, created, **kwargs):
     try:
         message = _("transfer_order_detail") % {
-            "service_type": instance.service.type,
+            "service_type": instance.service_type,
             "category": instance.category.name,
             "passanger_count": instance.passanger_count,
             "date": instance.date,
