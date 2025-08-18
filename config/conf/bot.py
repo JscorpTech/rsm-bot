@@ -31,3 +31,11 @@ VISA_SERVICE_TYPES = [
     "umra",
     "turistik",
 ]
+
+
+POWER_TYPES = [
+    "RO",
+    "BB",
+    "HB",
+    "FB",
+]

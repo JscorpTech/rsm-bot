@@ -10,6 +10,8 @@ class HotelState(StatesGroup):
     departure_date = State()
     rooms = State()
     detail = State()
+    power_type = State()
+    transfer = State()
 
 
 class TransferState(StatesGroup):

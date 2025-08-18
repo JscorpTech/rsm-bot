@@ -42,4 +42,6 @@ class HotelOrder(AbstractBaseModel):
     departure_date = models.CharField(_("departure_date"), max_length=255)
     rooms = models.CharField(_("rooms"), max_length=255)
     hotel = models.ForeignKey("HotelModel", on_delete=models.SET_NULL, null=True, blank=False)
+    power_type = models.CharField(_("power type"), max_length=255, default="RO")
+    transfer = models.BooleanField(_("transfer"), default=False)
     status = models.CharField(_("status"), choices=STATUS, max_length=255, default="pending")

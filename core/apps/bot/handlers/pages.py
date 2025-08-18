@@ -144,7 +144,6 @@ def hotel_break_handler(msg: Message):
                         continue
                     media.append(InputMediaVideo(open(file_path, "rb")))
             res = bot.send_media_group(msg.chat.id, media)
-            logging.error(res)
             for tfile, file_instance in zip(res, files):
                 if file_instance.file_type == "video":
                     file_instance.file_id = tfile.video.file_id
@@ -152,6 +151,7 @@ def hotel_break_handler(msg: Message):
                     file_instance.file_id = tfile.photo[-1].file_id
                 file_instance.save()
         except Exception as e:
+            logging.error(str(e))
             print(e)
 
 
@@ -182,6 +182,34 @@ def hotel_departure_date_handler(msg: Message):
     with bot.retrieve_data(msg.chat.id) as data:
         data["departure_date"] = msg.text
 
+    bot.set_state(msg.chat.id, HotelState.power_type)
+    bot.send_message(
+        msg.chat.id,
+        _("enter_power_type"),
+        reply_markup=buttons.back(),
+    )
+
+
+@bot.message_handler(state=HotelState.power_type)
+def hotel_power_type_handler(msg: Message):
+    with bot.retrieve_data(msg.chat.id) as data:
+        data["power_type"] = msg.text
+
+    bot.set_state(msg.chat.id, HotelState.transfer)
+    bot.send_message(
+        msg.chat.id,
+        _("enter_transfer"),
+        reply_markup=buttons.back(),
+    )
+
+
+@bot.message_handler(state=HotelState.transfer)
+def hotel_power_type_handler(msg: Message):
+    if (_("yes") != msg.text) and _("no") != msg.text:
+        bot.send_message(msg.chat.id, _("putb"))
+    with bot.retrieve_data(msg.chat.id) as data:
+        data["transfer"] = msg.text == _("yes")
+
     bot.set_state(msg.chat.id, HotelState.rooms)
     bot.send_message(
         msg.chat.id,
@@ -205,6 +233,8 @@ def hotel_rooms_handler(msg: Message):
             arrival_date=data["arrival_date"],
             departure_date=data["departure_date"],
             rooms=data["hotel_rooms"],
+            transfer=data["transfer"],
+            power_type=data["power_type"],
         )
         bot.delete_state(msg.chat.id)
         bot.send_message(
