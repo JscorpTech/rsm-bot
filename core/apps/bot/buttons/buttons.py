@@ -40,6 +40,16 @@ def back(button=None):
     return button
 
 
+def yes_no():
+    button = ReplyKeyboardMarkup(resize_keyboard=True)
+    button.add(KeyboardButton(_("yes")), KeyboardButton(_("no")))
+    return back(button)
+
+
+def power_type():
+    return back(make_rely_button(settings.POWER_TYPES))
+
+
 def lang(is_back=True):
     button = ReplyKeyboardMarkup(resize_keyboard=True)
     button.add(KeyboardButton(_("uz")))

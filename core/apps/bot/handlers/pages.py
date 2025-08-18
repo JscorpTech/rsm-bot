@@ -186,7 +186,7 @@ def hotel_departure_date_handler(msg: Message):
     bot.send_message(
         msg.chat.id,
         _("enter_power_type"),
-        reply_markup=buttons.back(),
+        reply_markup=buttons.power_type(),
     )
 
 
@@ -199,7 +199,7 @@ def hotel_power_type_handler(msg: Message):
     bot.send_message(
         msg.chat.id,
         _("enter_transfer"),
-        reply_markup=buttons.back(),
+        reply_markup=buttons.yes_no(),
     )
 
 
