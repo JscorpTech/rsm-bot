@@ -40,12 +40,12 @@ def back(button=None):
     return button
 
 
-def lang(back=True):
+def lang(is_back=True):
     button = ReplyKeyboardMarkup(resize_keyboard=True)
     button.add(KeyboardButton(_("uz")))
     button.add(KeyboardButton(_("en")))
     button.add(KeyboardButton(_("ru")))
-    if back:
+    if is_back:
         return back(button)
     return button
 

@@ -292,9 +292,7 @@ def transfer_goods_handler(msg: Message):
 
 @bot.message_handler(message="change_lang")
 def change_lang(msg: Message):
-    bot.send_message(msg.chat.id, "salom")
     set_data(msg.chat.id, "page", "change_lang")
-    bot.send_message(msg.chat.id, "salom")
     bot.send_message(
         msg.chat.id,
         _("select_lang"),
