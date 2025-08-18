@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.core.files.base import ContentFile
 from telebot.types import InputMediaPhoto, InputMediaVideo, Message, ReplyKeyboardRemove
@@ -142,6 +144,7 @@ def hotel_break_handler(msg: Message):
                         continue
                     media.append(InputMediaVideo(open(file_path, "rb")))
             res = bot.send_media_group(msg.chat.id, media)
+            logging.error(res)
             for tfile, file_instance in zip(res, files):
                 if file_instance.file_type == "video":
                     file_instance.file_id = tfile.video.file_id
