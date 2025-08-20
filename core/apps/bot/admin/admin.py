@@ -23,13 +23,13 @@ class HotelAdmin(TabbedTranslationAdmin, ModelAdmin):
 
 @admin.register(AddressModel)
 class AddressAdmin(TabbedTranslationAdmin, ModelAdmin):
-    list_display = ["name"]
+    list_display = ["name", "service"]
     search_fields = ["name"]
 
 
 @admin.register(CategoryModel)
 class CategoryAdmin(TabbedTranslationAdmin, ModelAdmin):
-    list_display = ["name"]
+    list_display = ["name", "service"]
     search_fields = ["fields"]
 
 
