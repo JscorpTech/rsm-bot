@@ -71,12 +71,12 @@ def VisaOrderSignal(sender, instance, created, **kwargs):
 def MiniTourOrderSignal(sender, instance, created, **kwargs):
     try:
         message = _("mini_tour_order_detail") % {
-            "full_name": instance.full_name,
+            "full_name": instance.user.full_name,
             "phone": instance.user.phone,
             "package": instance.package.name,
             "location": instance.address.name,
             "status": instance.status,
-            "link": env.str("DOMAIN") + reverse("admin:bot_visaorder_change", args=[instance.id]),
+            "link": env.str("DOMAIN") + reverse("admin:bot_minitourorder_change", args=[instance.id]),
         }
         bot.send_message(env.str("CHANNEL"), message)
     except Exception as e:
