@@ -4,6 +4,7 @@ from unfold.admin import ModelAdmin, TabularInline
 
 from core.apps.bot.models import AddressModel, CategoryModel, HotelModel, VisaOrder
 from core.apps.bot.models.hotel import File, HotelOrder
+from core.apps.bot.models.mini_tour import MiniTourOrder, PackageModel
 from core.apps.bot.models.transfer import TransferOrder
 
 
@@ -40,6 +41,16 @@ class VisaOrderAdmin(ModelAdmin):
 @admin.register(TransferOrder)
 class VisaOrderAdmin(ModelAdmin):
     list_display = ["id", "user__full_name", "status"]
+
+
+@admin.register(MiniTourOrder)
+class MiniTourOrderAdmin(ModelAdmin):
+    list_display = ["id", "user__full_name"]
+
+
+@admin.register(PackageModel)
+class PackageAdmin(TabbedTranslationAdmin, ModelAdmin):
+    list_display = ["id", "name", "file"]
 
 
 @admin.register(HotelOrder)

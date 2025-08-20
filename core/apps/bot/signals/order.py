@@ -7,6 +7,7 @@ from django.urls import reverse
 from config.env import env
 from core.apps.bot.bot import bot
 from core.apps.bot.models import HotelOrder, TransferOrder, VisaOrder
+from core.apps.bot.models.mini_tour import MiniTourOrder
 from core.apps.bot.services import get_message as _
 
 
@@ -58,6 +59,22 @@ def VisaOrderSignal(sender, instance, created, **kwargs):
             "nationality": instance.nationality,
             "birth_date": instance.birth_date,
             "service": instance.service,
+            "status": instance.status,
+            "link": env.str("DOMAIN") + reverse("admin:bot_visaorder_change", args=[instance.id]),
+        }
+        bot.send_message(env.str("CHANNEL"), message)
+    except Exception as e:
+        logging.error(str(e))
+
+
+@receiver(post_save, sender=MiniTourOrder)
+def MiniTourOrderSignal(sender, instance, created, **kwargs):
+    try:
+        message = _("mini_tour_order_detail") % {
+            "full_name": instance.full_name,
+            "phone": instance.user.phone,
+            "package": instance.package.name,
+            "location": instance.address.name,
             "status": instance.status,
             "link": env.str("DOMAIN") + reverse("admin:bot_visaorder_change", args=[instance.id]),
         }

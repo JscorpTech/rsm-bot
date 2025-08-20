@@ -8,7 +8,6 @@ from core.apps.bot import buttons
 from core.apps.bot.bot import bot
 from core.apps.bot.models import AddressModel, CategoryModel, HotelModel
 from core.apps.bot.models.hotel import File, HotelOrder
-from core.apps.bot.models.mini_tour import MiniTourOrder, PackageModel
 from core.apps.bot.models.transfer import TransferOrder
 from core.apps.bot.models.visa import VisaOrder
 from core.apps.bot.services import get_data
@@ -156,7 +155,7 @@ def hotel_break_handler(msg: Message):
             print(e)
 
 
-@bot.message_handler(message="break", state=HotelState.detail)
+@bot.message_handler(message="break")
 def hotel_break_handler(msg: Message):
     bot.set_state(msg.chat.id, HotelState.arrival_date)
     bot.send_message(
@@ -258,41 +257,14 @@ def mini_tour_handler(msg: Message):
 
 @bot.message_handler(state=MiniTourState.location)
 def mini_tour_category_handler(msg: Message):
-    category = AddressModel.objects.filter(name=msg.text, service="mini_tour")
+    category = CategoryModel.objects.filter(name=msg.text, service="mini_tour")
     if not category.exists():
         bot.send_message(msg.chat.id, _("putb"))
         return
     with bot.retrieve_data(msg.chat.id) as data:
-        data["location"] = category.first().id
-        bot.set_state(msg.chat.id, MiniTourState.package)
+        data["location"] = category.id
+        bot.set_state(MiniTourState.package)
         bot.send_message(msg.chat.id, _("enter_package"), reply_markup=buttons.mini_tour_packages())
-
-
-@bot.message_handler(state=MiniTourState.package)
-def mini_tour_package_handler(msg: Message):
-    package = PackageModel.objects.filter(name=msg.text)
-    if not package.exists():
-        bot.send_message(msg.chat.id, _("putb"))
-        return
-    with bot.retrieve_data(msg.chat.id) as data:
-        package = package.first()
-        data["package"] = package.id
-        bot.set_state(msg.chat.id, MiniTourState.detail)
-        with open(package.file.path, "rb") as file:
-            bot.send_document(msg.chat.id, file, caption=package.desc, reply_markup=buttons.mini_tour_detail())
-
-
-@bot.message_handler(message="break", state=MiniTourState.detail)
-def mini_tour_break(msg: Message):
-    with bot.retrieve_data(msg.chat.id) as data:
-        MiniTourOrder.objects.create(
-            user=get_user(msg.chat.id),
-            address_id=data["location"],
-            package_id=data["package"],
-        )
-        bot.send_message(msg.chat.id, _("confirmed_order"), reply_markup=buttons.home())
-        bot.delete_state(msg.chat.id)
-        set_data(msg.chat.id, "page", "home")
 
 
 @bot.message_handler(message="transfer")

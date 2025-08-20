@@ -22,6 +22,12 @@ class TransferState(StatesGroup):
     goods = State()
 
 
+class MiniTourState(StatesGroup):
+    location = State()
+    package = State()
+    detail = State()
+
+
 class VisaState(StatesGroup):
     service_type = State()
     full_name = State()
