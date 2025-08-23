@@ -56,6 +56,9 @@ def back(msg: Message):
             _("home"),
             reply_markup=buttons.home(),
         )
+        return
+
+    return back_home(msg)
 
 
 @bot.message_handler(message="hotel")
