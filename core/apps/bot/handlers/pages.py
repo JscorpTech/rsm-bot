@@ -190,7 +190,7 @@ def hotel_departure_date_handler(msg: Message):
     bot.send_message(
         msg.chat.id,
         _("enter_how_many_rooms"),
-        reply_markup=buttons.power_type(),
+        reply_markup=buttons.back(),
     )
 
 
@@ -204,7 +204,7 @@ def hotel_rooms_handler(msg: Message):
         bot.send_message(
             msg.chat.id,
             _("enter_power_type"),
-            reply_markup=buttons.home(),
+            reply_markup=buttons.power_type(),
         )
 
 
@@ -243,7 +243,7 @@ def hotel_power_type_handler(msg: Message):
         bot.send_message(
             msg.chat.id,
             _("confirmed_order"),
-            reply_markup=buttons.back(),
+            reply_markup=buttons.home(),
         )
 
 
