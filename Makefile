@@ -1,5 +1,5 @@
 
-start: up
+start: up seed
 
 up:
 	docker compose up -d

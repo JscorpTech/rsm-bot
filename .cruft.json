@@ -1,28 +1,33 @@
 {
- "template": "https://github.com/JscorpTech/django",
- "commit": "52d9e5f84864643b6de1273f60c7d47cc46b3be9",
- "checkout": null,
- "context": {
-  "cookiecutter": {
-   "cacheops": true,
-   "silk": true,
-   "storage": true,
-   "rosetta": true,
-   "channels": false,
-   "ckeditor": true,
-   "modeltranslation": true,
-   "parler": false,
-   "project_name": "rsm",
-   "settings_module": "config.settings.local",
-   "runner": "wsgi",
-   "script": "entrypoint.sh",
-   "key": "key",
-   "port": "8081",
-   "phone": "998888112309",
-   "password": "2309",
-   "max_line_length": "120",
-   "project_slug": "rsm"
-  }
- },
- "directory": null
+  "template": "https://github.com/JscorpTech/django",
+  "commit": "57936dcccfd475689cf59a368d414c60a5cb2296",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "rsm",
+      "project_slug": "rsm",
+      "settings_module": "config.settings.local",
+      "runner": "wsgi",
+      "celery": "no",
+      "cache": "no",
+      "script": "entrypoint.sh",
+      "key": "key",
+      "port": "8081",
+      "phone": "998888112309",
+      "password": "2309",
+      "max_line_length": "120",
+      "silk": true,
+      "storage": true,
+      "channels": false,
+      "rosetta": true,
+      "cacheops": true,
+      "ckeditor": true,
+      "modeltranslation": true,
+      "parler": false,
+      "version": "0.1.1",
+      "_template": "https://github.com/JscorpTech/django",
+      "_commit": "57936dcccfd475689cf59a368d414c60a5cb2296"
+    }
+  },
+  "directory": null
 }
