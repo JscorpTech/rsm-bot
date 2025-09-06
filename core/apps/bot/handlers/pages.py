@@ -186,12 +186,26 @@ def hotel_departure_date_handler(msg: Message):
     with bot.retrieve_data(msg.chat.id) as data:
         data["departure_date"] = msg.text
 
-    bot.set_state(msg.chat.id, HotelState.power_type)
+    bot.set_state(msg.chat.id, HotelState.rooms)
     bot.send_message(
         msg.chat.id,
-        _("enter_power_type"),
+        _("enter_how_many_rooms"),
         reply_markup=buttons.power_type(),
     )
+
+
+@bot.message_handler(state=HotelState.rooms)
+def hotel_rooms_handler(msg: Message):
+    if not msg.text.isdigit():
+        bot.send_message(msg.chat.id, _("please_enter_number"), reply_markup=buttons.back())
+        return
+    with bot.retrieve_data(msg.chat.id) as data:
+        data["hotel_rooms"] = msg.text
+        bot.send_message(
+            msg.chat.id,
+            _("enter_power_type"),
+            reply_markup=buttons.home(),
+        )
 
 
 @bot.message_handler(state=HotelState.power_type)
@@ -214,21 +228,6 @@ def hotel_power_type_handler(msg: Message):
     with bot.retrieve_data(msg.chat.id) as data:
         data["transfer"] = msg.text == _("yes")
 
-    bot.set_state(msg.chat.id, HotelState.rooms)
-    bot.send_message(
-        msg.chat.id,
-        _("enter_how_many_rooms"),
-        reply_markup=buttons.back(),
-    )
-
-
-@bot.message_handler(state=HotelState.rooms)
-def hotel_rooms_handler(msg: Message):
-    if not msg.text.isdigit():
-        bot.send_message(msg.chat.id, _("please_enter_number"), reply_markup=buttons.back())
-        return
-    with bot.retrieve_data(msg.chat.id) as data:
-        data["hotel_rooms"] = msg.text
         HotelOrder.objects.create(
             user=get_user(msg.chat.id),
             hotel_id=data["hotel"],
@@ -244,7 +243,7 @@ def hotel_rooms_handler(msg: Message):
         bot.send_message(
             msg.chat.id,
             _("confirmed_order"),
-            reply_markup=buttons.home(),
+            reply_markup=buttons.back(),
         )
 
 

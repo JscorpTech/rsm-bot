@@ -2,12 +2,13 @@ import os
 import pathlib
 from typing import List, Union
 
+from django.utils.translation import gettext_lazy as _
+from rich.traceback import install
+
 from config.conf import *  # noqa
 from config.conf.apps import APPS
 from config.conf.modules import MODULES
 from config.env import env
-from django.utils.translation import gettext_lazy as _
-from rich.traceback import install
 
 install(show_locals=True)
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -27,7 +28,7 @@ DATABASES = {
         "USER": env.str("DB_USER"),
         "PASSWORD": env.str("DB_PASSWORD"),
         "HOST": env.str("DB_HOST"),
-        "PORT": env.str("DB_PORT"),
+        "PORT": 5432,
     }
 }
 
@@ -96,13 +97,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # fmt: on
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.{}".format(validator)
-    } for validator in [
+    {"NAME": "django.contrib.auth.password_validation.{}".format(validator)}
+    for validator in [
         "UserAttributeSimilarityValidator",
         "MinimumLengthValidator",
         "CommonPasswordValidator",
-        "NumericPasswordValidator"
+        "NumericPasswordValidator",
     ]
 ]
 
@@ -156,7 +156,6 @@ MODELTRANSLATION_LANGUAGES = ("uz", "ru", "en")
 MODELTRANSLATION_DEFAULT_LANGUAGE = "uz"
 
 
-
 JST_LANGUAGES = [
     {
         "code": "uz",
@@ -170,5 +169,5 @@ JST_LANGUAGES = [
     {
         "code": "ru",
         "name": "Russia",
-    }
+    },
 ]
