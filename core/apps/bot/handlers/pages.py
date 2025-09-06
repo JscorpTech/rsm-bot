@@ -201,6 +201,7 @@ def hotel_rooms_handler(msg: Message):
         return
     with bot.retrieve_data(msg.chat.id) as data:
         data["hotel_rooms"] = msg.text
+        bot.set_state(msg.chat.id, HotelState.power_type)
         bot.send_message(
             msg.chat.id,
             _("enter_power_type"),
