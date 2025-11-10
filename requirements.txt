@@ -49,3 +49,4 @@ boto3
 
 # !NOTE: Telegram bot
 pyTelegramBotAPI~=4.28.0
+gevent
